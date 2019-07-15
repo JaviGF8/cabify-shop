@@ -1,0 +1,181 @@
+@import '../../../constants.scss';
+
+.btn {
+  padding: 15px 20px;
+  margin: 5px;
+  border: none;
+  color: $white;
+  border-radius: 5px;
+  font-weight: bold;
+  outline: none;
+  transition: all linear 200ms;
+  font-weight: 400;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  box-shadow: 0px 2px 2px rgba($black, 0.2);
+  cursor: pointer;
+
+  i {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+}
+.btn:hover:not(.transparent):not(.disabled) {
+  box-shadow: 0px 3px 3px rgba($black, 0.3);
+  transform: translateY(-1px);
+}
+.btn:active:not(.transparent):not(.disabled) {
+  box-shadow: 0px 1px 1px rgba($black, 0.1);
+  transform: translateY(1px);
+}
+// PRIMARY
+.btn.primary {
+  background-color: $default-primary;
+}
+.btn.primary:hover {
+  background-color: $default-primary-dark;
+}
+.btn.primary:disabled,
+.btn.primary[disabled] {
+  background-color: rgba($default-primary, 0.5);
+  cursor: not-allowed;
+}
+
+.btn.primary.invert {
+  background-color: $white;
+  border: 1px solid $default-primary;
+  color: $default-primary;
+}
+.btn.primary.invert:hover {
+  background-color: $white;
+  border: 1px solid $default-primary-dark;
+  color: $default-primary-dark;
+}
+.btn.primary.invert:disabled,
+.btn.primary.invert[disabled] {
+  border: 1px solid rgba($default-primary, 0.5);
+  cursor: not-allowed;
+}
+// SECONDARY
+.btn.secondary {
+  background-color: $default-secondary;
+}
+.btn.secondary:hover {
+  background-color: $default-secondary-dark;
+}
+.btn.secondary:disabled,
+.btn.secondary[disabled] {
+  background-color: rgba($default-secondary, 0.5);
+  cursor: not-allowed;
+}
+
+.btn.secondary.invert {
+  background-color: $white;
+  border: 1px solid $default-secondary;
+  color: $default-secondary;
+}
+.btn.secondary.invert:hover {
+  background-color: $white;
+  border: 1px solid $default-secondary-dark;
+  color: $default-secondary-dark;
+}
+.btn.secondary.invert:disabled,
+.btn.secondary.invert[disabled] {
+  border: 1px solid rgba($default-secondary, 0.5);
+  cursor: not-allowed;
+}
+// ACCENT
+.btn.accent {
+  background-color: $default-accent;
+}
+.btn.accent:hover {
+  background-color: $default-accent-dark;
+}
+.btn.accent:disabled,
+.btn.accent[disabled] {
+  background-color: rgba($default-accent, 0.5);
+  cursor: not-allowed;
+}
+
+.btn.accent.invert {
+  background-color: $white;
+  border: 1px solid $default-accent;
+  color: $default-accent;
+}
+.btn.accent.invert:hover {
+  background-color: $white;
+  border: 1px solid $default-accent-dark;
+  color: $default-accent-dark;
+}
+.btn.accent.invert:disabled,
+.btn.accent.invert[disabled] {
+  border: 1px solid rgba($default-accent, 0.5);
+  cursor: not-allowed;
+}
+// GRAY
+.btn.gray {
+  background-color: $default-gray;
+}
+.btn.gray:hover {
+  background-color: $default-gray-dark;
+}
+.btn.gray:disabled,
+.btn.gray[disabled] {
+  background-color: rgba($default-gray, 0.5);
+  cursor: not-allowed;
+}
+
+.btn.gray.invert {
+  background-color: $white;
+  border: 1px solid $default-gray;
+  color: $default-gray;
+}
+.btn.gray.invert:hover {
+  background-color: $white;
+  border: 1px solid $default-gray-dark;
+  color: $default-gray-dark;
+}
+.btn.gray.invert:disabled,
+.btn.gray.invert[disabled] {
+  border: 1px solid rgba($default-gray, 0.5);
+  cursor: not-allowed;
+}
+// BLACK
+.btn.black {
+  background-color: $black;
+}
+.btn.black:hover {
+  background-color: rgba($black, 0.8);
+}
+.btn.black:disabled,
+.btn.black[disabled] {
+  background-color: rgba($black, 0.5);
+  cursor: not-allowed;
+}
+
+.btn.black.invert {
+  background-color: $white;
+  border: 1px solid $black;
+  color: $black;
+}
+.btn.black.invert:hover {
+  background-color: $white;
+  border: 1px solid rgba($black, 0.8);
+  color: rgba($black, 0.8);
+}
+.btn.black.invert:disabled,
+.btn.black.invert[disabled] {
+  border: 1px solid rgba($black, 0.5);
+  cursor: not-allowed;
+}
+// TRANSPARENT
+.btn.transparent {
+  background-color: transparent;
+  border: 0;
+  color: $default-primary;
+  box-shadow: none;
+}
+.btn.transparent:disabled,
+.btn.transparent[disabled] {
+  cursor: not-allowed;
+}

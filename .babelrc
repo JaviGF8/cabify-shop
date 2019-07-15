@@ -1,0 +1,23 @@
+{
+  "env": {
+      "production": {
+          "presets": [
+              "@babel/preset-env",
+              "@babel/preset-react",
+              "minifi"
+          ],
+          "plugins": [
+              "transform-class-properties"
+          ],
+      },
+      "development": {
+          "presets": [
+              "@babel/preset-env",
+              "@babel/preset-react"
+          ],
+          "plugins": [
+              "transform-class-properties"
+          ],
+      }
+  }
+}

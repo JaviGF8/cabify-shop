@@ -1,0 +1,115 @@
+@import '../../../constants.scss';
+
+.input {
+  margin: 10px 5px;
+  display: flex;
+  flex-direction: column;
+
+  .placeholder {
+    margin: 0;
+    font-size: 16px;
+    transition: linear all 200ms;
+    text-align: left;
+    position: absolute;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: $default-gray;
+  }
+  .placeholder.with-content {
+    margin-top: -20px;
+    font-size: 12px;
+  }
+  .placeholder.with-icon {
+    padding-left: 30px;
+  }
+  .placeholder.with-content.with-icon {
+    padding-left: 0;
+  }
+
+  > div {
+    border: 1px solid $default-gray;
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+    transition: border 200ms linear;
+
+    i {
+      font-size: 18px;
+      width: 10%;
+      max-width: 30px;
+      transition: color 200ms linear;
+    }
+    input,
+    textarea {
+      border: 0;
+      width: 100%;
+      min-height: 30px;
+      font-size: 16px;
+      padding: 5px;
+      outline-width: 0;
+      background: transparent;
+    }
+    textarea {
+      font-family: inherit;
+      resize: none;
+      overflow: auto;
+      line-height: 20px;
+    }
+    textarea.vert {
+      resize: vertical;
+    }
+    textarea.noResize {
+      resize: none;
+    }
+  }
+
+  .input-info {
+    margin: 0;
+    font-size: 12px;
+    padding: 0px 5px;
+    text-align: left;
+  }
+
+  .input-error {
+    background-color: $color-error-background;
+    color: $color-error;
+    margin: 0;
+    font-size: 12px;
+    padding: 0px 5px;
+    text-align: left;
+  }
+}
+
+.input.input-focused {
+  > div {
+    border: 1px solid $default-primary;
+
+    i {
+      color: $default-primary;
+    }
+  }
+}
+.input.error,
+.input.input-focused.error {
+  > div {
+    border: 1px solid $color-error;
+    color: $color-error;
+    background-color: $color-error-background;
+
+    input,
+    textarea {
+      background-color: transparent;
+    }
+    i {
+      color: $color-error;
+    }
+  }
+}
+.input.disabled {
+  > div {
+    border-color: transparent;
+  }
+}
