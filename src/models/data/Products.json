@@ -1,0 +1,23 @@
+[
+  {
+    "code": "TSHIRT",
+    "name": "Cabify T-Shirt",
+    "shortName": "Shirt",
+    "price": 20,
+    "productCode": "X7R2OPX"
+  },
+  {
+    "code": "MUG",
+    "name": "Cabify Coffee Mug",
+    "shortName": "Mug",
+    "price": 7.5,
+    "productCode": "X2G2OPZ"
+  },
+  {
+    "code": "CAP",
+    "name": "Cabify Cap",
+    "shortName": "Cap",
+    "price": 5,
+    "productCode": "X3W2OPY"
+  }
+]

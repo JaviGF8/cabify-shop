@@ -1,13 +1,12 @@
-@import '../../../constants.scss';
+@import '../../../styles/constants.scss';
 
 .products {
   max-height: 100%;
   overflow: auto;
-  
+
   .products-list {
     .product.row {
       .input {
-        
         > div {
           border-radius: 5px;
           border-color: $default-gray-light;

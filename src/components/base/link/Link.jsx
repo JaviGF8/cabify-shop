@@ -4,12 +4,12 @@ import { NavLink } from 'react-router-dom';
 
 import { BUTTON_TYPES } from '../button/Button';
 
-const Link = ({ children, className, disabled, iconLeft, iconRight, inverted, onClick, text, type, to }) => (
-  <NavLink
-    disabled={disabled}
-    className={`btn ${type}${inverted ? ' invert' : ''}${className ? ` ${className}` : ''}`}
-    onClick={onClick}
-    to={to}>
+/**
+ * Extends Button component
+ * @param {*} param0
+ */
+const Link = ({ children, className, iconLeft, iconRight, inverted, text, type, ...rest }) => (
+  <NavLink {...rest} className={`btn ${type}${inverted ? ' invert' : ''}${className ? ` ${className}` : ''}`}>
     {iconLeft && <i className={`${iconLeft} left`} aria-hidden="true" />}
     {text && <span>{text}</span>}
     {iconRight && <i className={`${iconRight} right`} aria-hidden="true" />}
@@ -20,11 +20,9 @@ const Link = ({ children, className, disabled, iconLeft, iconRight, inverted, on
 Link.defaultProps = {
   children: null,
   className: null,
-  disabled: false,
   iconLeft: null,
   iconRight: null,
   inverted: false,
-  onClick: () => true,
   text: null,
   type: BUTTON_TYPES.primary,
 };
@@ -32,11 +30,9 @@ Link.defaultProps = {
 Link.propTypes = {
   children: PropTypes.oneOfType([ PropTypes.arrayOf(PropTypes.node), PropTypes.node ]),
   className: PropTypes.string,
-  disabled: PropTypes.any,
   iconLeft: PropTypes.string,
   iconRight: PropTypes.string,
   inverted: PropTypes.bool,
-  onClick: PropTypes.func,
   text: PropTypes.string,
   to: PropTypes.string.isRequired,
   type: PropTypes.oneOf(Object.values(BUTTON_TYPES).map((type) => type)),

@@ -145,22 +145,18 @@ export default class Input extends Component {
       errorText,
       icon,
       iconRight,
-      id,
       infoText,
-      max,
-      maxLength,
-      min,
-      minLength,
       placeholder,
       textarea,
       type,
+      ...rest
     } = this.props;
 
     return (
       <div
-        className={`input${error ? ' error' : ''}${disabled ? ' disabled' : ''}${
-          className ? ` ${className}` : ''
-        }${focused ? ' input-focused' : ''}`}>
+        className={`input${error ? ' error' : ''}${disabled ? ' disabled' : ''}${className ? ` ${className}` : ''}${
+          focused ? ' input-focused' : ''
+        }`}>
         <div>
           {placeholder ? (
             <p
@@ -173,34 +169,24 @@ export default class Input extends Component {
           {icon && !iconRight && <i className={icon} aria-hidden="true" />}
           {textarea ? (
             <textarea
-              id={id}
-              disabled={disabled}
-              maxLength={maxLength}
-              minLength={minLength}
+              {...rest}
               onBlur={() => this.setState({ focused: false })}
               onChange={(event) => this.onChangeTextarea(event)}
               onKeyPress={this.keyPress}
               onFocus={() => this.setState({ focused: true })}
               placeholder=""
               ref={this.textareaRef}
-              rows={rows}
-              type={type}
+              row={rows}
               value={this.getValue()}
             />
           ) : (
             <input
-              id={id}
-              disabled={disabled}
-              max={max}
-              maxLength={maxLength}
-              min={min}
-              minLength={minLength}
+              {...rest}
               onBlur={() => this.setState({ focused: false })}
               onChange={(event) => this.onChange(event.target.value)}
               onKeyPress={this.keyPress}
               onFocus={() => this.setState({ focused: true })}
               placeholder=""
-              type={type}
               value={this.getValue()}
             />
           )}
@@ -214,7 +200,6 @@ export default class Input extends Component {
 }
 
 Input.defaultProps = {
-  id: null,
   className: null,
   disabled: false,
   error: false,
@@ -222,10 +207,8 @@ Input.defaultProps = {
   icon: null,
   iconRight: false,
   infoText: null,
-  max: null,
   maxLength: null,
   minRows: 1,
-  min: null,
   minLength: null,
   maxRows: 5,
   onChange: () => true,
@@ -239,7 +222,6 @@ Input.defaultProps = {
 };
 
 Input.propTypes = {
-  id: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.any,
   error: PropTypes.bool,
@@ -247,10 +229,8 @@ Input.propTypes = {
   icon: PropTypes.string,
   iconRight: PropTypes.bool,
   infoText: PropTypes.string,
-  max: PropTypes.number,
   maxLength: PropTypes.number,
   minRows: PropTypes.number,
-  min: PropTypes.number,
   minLength: PropTypes.number,
   maxRows: PropTypes.number,
   onChange: PropTypes.func,

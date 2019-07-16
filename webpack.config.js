@@ -13,11 +13,11 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './src/index.html',
   filename: 'index.html',
   inject: 'body',
-  hash: isProduction,
+  hash: true,
 });
 
 const extractProjectStyle = new MiniCssExtractPlugin({
-  filename: isProduction ? '[name].[contenthash].css' : '[name].css',
+  filename: '[name].[contenthash].css',
 });
 
 const getPlugins = () => {
@@ -29,7 +29,7 @@ const getPlugins = () => {
     new webpack.ProvidePlugin({ jQuery: 'jquery' }),
     new webpack.DefinePlugin({
       'process.env.ENVIRONMENT': JSON.stringify(process.env.ENVIRONMENT),
-    })
+    }),
   );
 
   if (isProduction) {
@@ -53,29 +53,28 @@ module.exports = {
   optimization: {
     nodeEnv: process.env.ENVIRONMENT,
     splitChunks: { chunks: 'all' },
-    minimizer:
-      isProduction ?
-        [
-            new TerserPlugin({
-              terserOptions: {
-                compress: true,
-                paralel: true,
-                ecma: 6,
-                output: {
-                  comments: false,
-                },
+    minimizer: isProduction ?
+      [
+          new TerserPlugin({
+            terserOptions: {
+              compress: true,
+              paralel: true,
+              ecma: 6,
+              output: {
+                comments: false,
               },
-              sourceMap: false,
-              parallel: true,
-            }),
-            new OptimizeCSSAssetsPlugin(),
-          ] :
-        []
+            },
+            sourceMap: false,
+            parallel: true,
+          }),
+          new OptimizeCSSAssetsPlugin(),
+        ] :
+      [],
   },
   mode: process.env.ENVIRONMENT,
   resolve: {
     modules: [ path.join(__dirname, './src'), 'node_modules' ],
-    extensions: [ '.js', '.jsx', '.css', '.scss' ]
+    extensions: [ '.js', '.jsx', '.css', '.scss' ],
   },
   module: {
     rules: [
@@ -92,9 +91,9 @@ module.exports = {
         options: {
           failOnWarning: false,
           failOnError: true,
-          formatter: eslint.CLIEngine.getFormatter('stylish')
+          formatter: eslint.CLIEngine.getFormatter('stylish'),
         },
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.jsx$/,
@@ -103,9 +102,9 @@ module.exports = {
         options: {
           failOnWarning: false,
           failOnError: true,
-          formatter: eslint.CLIEngine.getFormatter('stylish')
+          formatter: eslint.CLIEngine.getFormatter('stylish'),
         },
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.(css|scss|sass)$/,
@@ -130,16 +129,16 @@ module.exports = {
           'css-loader',
         ],
       },
-    ]
+    ],
   },
   devServer: {
     host: '0.0.0.0',
     port: 3001,
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   plugins: getPlugins(),
   externals: {
     'react/lib/ExecutionEnvironment': true,
-    'react/lib/ReactContext': true
-  }
+    'react/lib/ReactContext': true,
+  },
 };

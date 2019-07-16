@@ -1,4 +1,5 @@
-import { validateProduct } from './Product';
+import productsArray from './data/Products.json';
+import Product, { validateProduct } from './Product';
 
 /**
  *
@@ -8,7 +9,7 @@ const calculateTotal = (products) => {
   let total = 0;
   if (products && products.length) {
     products.forEach((prod) => {
-      total = Number.parseFloat(total * prod.price).toFixed(2);
+      total = Number.parseFloat(Number.parseFloat(total) + prod.quantity * prod.price).toFixed(2);
     });
   }
   return total;
@@ -38,49 +39,29 @@ const onChange = (amount, product, products, total) => {
 
   let totalItems = total;
   if (-1 < idx) {
-    totalItems = (total - newProds[idx].quantity) + value;
-    newProds[idx].quantity = value;
-    newProds[idx].total = Number.parseFloat(value * product.price).toFixed(2);
+    const prodEditing = { ...product };
+
+    totalItems = total - prodEditing.quantity + value;
+    prodEditing.quantity = value;
+    prodEditing.total = Number.parseFloat(value * product.price).toFixed(2);
+
+    newProds[idx] = prodEditing;
   }
 
   return { products: newProds, totalItems };
 };
 
 /**
- *
+ * Checkout class
  */
 class Checkout {
   constructor(pricingRules) {
     this.pricingRules = pricingRules;
     this.products = [];
-    this.total = 0;
+    this.appliedDiscounts = [];
+    this.totalPrice = 0;
     this.totalItems = 0;
-  };
-
-  get pricingRules() { return this.pricingRules; };
-
-  get products() { return this.products; };
-
-  get total() { return this.total; };
-
-  get totalItems() { return this.totalItems; };
-
-  set pricingRules(val) { this.pricingRules = val; };
-
-  set products(val) {
-    // Check if is an array
-    if (val && val.length) {
-      // Check if has an invalid product
-      if (val.find((prd) => !validateProduct(prd))) {
-        throw new Error('Invalid products');
-      }
-    } else {
-      // Is not an array
-      throw new Error('Invalid products');
-    }
-
-    this.products = val;
-  };
+  }
 
   /**
    *
@@ -88,24 +69,30 @@ class Checkout {
   onChangeQuantity = (amount, product) => {
     if (Number.isInteger(amount) && validateProduct(product)) {
       const { products, totalItems } = onChange(amount, product, this.products, this.totalItems);
+
       this.products = products;
       this.totalItems = totalItems;
-      this.total = calculateTotal(this.products);
+      this.totalPrice = calculateTotal(this.products);
+      return this;
+    }
+    throw new Error('Invalid values');
+  };
+
+  scan = (productCode) => {
+    // Search the product in the array
+    const product = productsArray.find((prd) => prd.code === productCode);
+
+    if (!product || !validateProduct(product)) {
+      // invalid product
+      throw new Error('Invalid product');
     } else {
-      throw new Error('Invalid values');
+      // product found
+      this.products.push(formatProduct(new Product(product)));
+      return this;
     }
   };
 
-  /**
-   *
-   */
-  scan = (product) => {
-    if (!validateProduct(product)) {
-      throw new Error('Invalid product');
-    }
-    this.products.push(formatProduct(product));
-    return this;
-  };
-};
+  total = () => this.totalPrice;
+}
 
 export default Checkout;

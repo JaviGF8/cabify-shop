@@ -24,13 +24,7 @@ const formatQuantity = (quantity, product, onChange) => (
       text="-"
       type={BUTTON_TYPES.transparent}
     />
-    <Input
-      max={100}
-      min={0}
-      onChange={(value) => onChange(value, product)}
-      step={1}
-      value={quantity}
-    />
+    <Input max={100} min={0} onChange={(value) => onChange(value, product)} step={1} value={quantity} />
     <Button
       className="count"
       disabled={100 === quantity}
@@ -46,23 +40,28 @@ const Cart = ({ currency, onChange, products }) => (
   <div className="products">
     <h1 className="main">Shopping Cart</h1>
     <Table
-      columns={[ {
-        field: 'product',
-        formatter: formatProduct,
-        header: 'Product',
-      }, {
-        field: 'quantity',
-        formatter: (quantity, product) => formatQuantity(quantity, product, onChange),
-        header: 'Quantity',
-      }, {
-        field: 'price',
-        formatter: (cell) => `${cell} ${currency}`,
-        header: 'Price',
-      }, {
-        field: 'total',
-        formatter: (cell) => `${cell} ${currency}`,
-        header: 'Total',
-      } ]}
+      columns={[
+        {
+          field: 'shortName',
+          formatter: formatProduct,
+          header: 'Product',
+        },
+        {
+          field: 'quantity',
+          formatter: (quantity, product) => formatQuantity(quantity, product, onChange),
+          header: 'Quantity',
+        },
+        {
+          field: 'price',
+          formatter: (cell) => `${cell} ${currency}`,
+          header: 'Price',
+        },
+        {
+          field: 'total',
+          formatter: (cell) => `${cell} ${currency}`,
+          header: 'Total',
+        },
+      ]}
       dataKey="code"
       elements={products}
     />

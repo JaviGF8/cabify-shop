@@ -1,0 +1,16 @@
+[
+  {
+    "productCode": "CAP",
+    "name": "2x1 Cap offer",
+    "discountType": "precentage",
+    "discountAmount": 50,
+    "minProducts": 2
+  },
+  {
+    "productCode": "TSHIRT",
+    "name": "x3 Shirt offer",
+    "discountType": "productPrice",
+    "discountAmount": 1,
+    "minProducts": 3
+  }
+]

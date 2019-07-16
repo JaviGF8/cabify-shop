@@ -3,79 +3,75 @@ import PropTypes from 'prop-types';
 
 import Cart from '../../components/shop/cart';
 import Summary from '../../components/shop/summary';
-
-const ELEMENTS = [
-  {
-    code: 'X7R2OPX',
-    product: 'Shirt',
-    price: '20',
-  }, {
-    code: 'X2G2OPZ',
-    product: 'Mug',
-    price: '5',
-  }, {
-    code: 'X3W2OPY',
-    product: 'Cap',
-    price: '10',
-  }
-];
-
-const formatProducts = (prods) => {
-  if (prods && prods.length) {
-    return prods.map((prod) => ({ ...prod, quantity: 0, total: Number.parseFloat(0).toFixed(2) }));
-  }
-
-  return null;
-};
+import { validateProduct } from '../../models/Product';
 
 export default class ShoppingCartPage extends Component {
   constructor() {
     super();
     this.state = {
-      products: null,
+      checkout: null,
     };
   }
 
   componentDidMount() {
-    this.setState({ products: formatProducts(ELEMENTS) });
+    const { initializeData } = this.props;
+    initializeData();
   }
 
-  onChangeQuantity = (val, product) => {
-    const { products } = this.state;
-    const newProds = [ ...products ];
-    const idx = newProds.findIndex((prd) => prd.code === product.code);
-    const value = Number.parseInt(val, 10) || 0;
-
-    if (-1 < idx) {
-      newProds[idx].quantity = value;
-      newProds[idx].total = Number.parseFloat(value * product.price).toFixed(2);
+  componentDidUpdate(prevProps) {
+    const { checkout } = this.props;
+    if (!prevProps.checkout && checkout) {
+      this.setState({ checkout });
     }
-    this.setState({ products });
   }
+
+  onChangeQuantity = (amount, product) => {
+    // if (!Number.isNaN(amount) && validateProduct(product)) {
+    //   const { checkout } = this.state;
+    //   const co = { ...checkout };
+
+    //   const { products, totalItems } = onChange(amount, product, co.products, co.totalItems);
+    //   co.products = products;
+    //   co.totalItems = totalItems;
+    //   co.totalPrice = calculateTotal(co.products);
+
+    //   this.setState({ checkout: co });
+    // }
+    const { checkout } = this.state;
+
+    const co = checkout.onChangeQuantity(amount, product);
+
+    this.setState({ checkout: co });
+  };
 
   render() {
-    const { products } = this.state;
-    return (<div id="shopping-cart-container">
-      <Cart
-        currency="€"
-        onChange={this.onChangeQuantity}
-        products={products}
-      />
-      <Summary
-        currency="€"
-        // discounts={}
-        // totalAmount={}
-        // totalPrice={}
-        // totalItems={}
-      />
-    </div>);
+    const { checkout } = this.state;
+    return (
+      <div id="shopping-cart-container">
+        <Cart
+          currency="€"
+          onChange={this.onChangeQuantity}
+          products={checkout && checkout.products && checkout.products}
+        />
+        <Summary
+          currency="€"
+          discounts={checkout && checkout.pricingRules}
+          // totalAmount={}
+          totalPrice={checkout && checkout.total && checkout.total()}
+          // totalItems={}
+        />
+      </div>
+    );
   }
 }
 
 ShoppingCartPage.defaultProps = {
+  checkout: null,
   // products: [],
 };
 
 ShoppingCartPage.propTypes = {
+  checkout: PropTypes.object,
+  initializeData: PropTypes.func.isRequired,
   // products: PropTypes.array,
 };

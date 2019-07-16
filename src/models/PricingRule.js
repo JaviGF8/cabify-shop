@@ -1,5 +1,5 @@
 /**
- *
+ * Default values for PricingRule type
  */
 export const RULE_TYPES = {
   precentage: 'precentage',
@@ -7,48 +7,36 @@ export const RULE_TYPES = {
 };
 
 /**
- *
- * @param {*} rule
+ * Checks if the Pricing rule is valid
+ * @param {*} pricingRule
  */
-export const validateRule = (rule) => {
-  if (
-    !rule || !rule.productCode || !rule.name || !RULE_TYPES[rule.discountType] || !rule.discountAmount ||
-    !rule.minProducts || !Number.isNaN(rule.discountAmount) || !Number.isNaN(rule.minProducts)
-  ) {
-    return false;
-  }
-  return true;
-};
+export const validatePricingRule = (pricingRule) =>
+  !(
+    !pricingRule ||
+    !pricingRule.productCode ||
+    !pricingRule.name ||
+    !RULE_TYPES[pricingRule.discountType] ||
+    !pricingRule.discountAmount ||
+    !pricingRule.minProducts ||
+    Number.isNaN(pricingRule.discountAmount) ||
+    Number.isNaN(pricingRule.minProducts)
+  );
 
 /**
- *
+ * Pricing rule entity
  */
 class PricingRule {
-  constructor(productCode, name, discountType, discountAmount, minProducts) {
-    if (!validateRule(productCode, name, discountType, discountAmount, minProducts)) {
+  constructor(pricingRule) {
+    if (!validatePricingRule(pricingRule)) {
       throw new Error('Invalid data');
     }
+    const { productCode, name, discountType, discountAmount, minProducts } = pricingRule;
     this.discountAmount = discountAmount;
+    this.discountType = discountType;
     this.minProducts = minProducts;
     this.name = name;
     this.productCode = productCode;
   }
-
-  get discountAmount() { return this.discountAmount; };
-
-  get minProducts() { return this.minProducts; };
-
-  get name() { return this.name; };
-
-  get productCode() { return this.productCode; };
-
-  set discountAmount(val) { this.discountAmount = val; };
-
-  set minProducts(val) { this.minProducts = val; };
-
-  set name(val) { this.name = val; };
-
-  set productCode(val) { this.productCode = val; };
-};
+}
 
 export default PricingRule;

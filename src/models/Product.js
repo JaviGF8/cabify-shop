@@ -1,39 +1,34 @@
 /**
- *
+ * Checks if the product is valid
  * @param {*} product
  */
-export const validateProduct = (product) => {
-  if (!product || !product.code || !product.name || !product.price || !Number.isNaN(product.price)) {
-    return false;
-  }
-  return true;
-};
+export const validateProduct = (product) =>
+  !(
+    !product ||
+    !product.code ||
+    !product.name ||
+    !product.price ||
+    !product.productCode ||
+    !product.shortName ||
+    Number.isNaN(product.price)
+  );
 
 /**
- *
+ * Product Entity
  */
 class Product {
-  constructor(code, name, price) {
-    if (!validateProduct({ code, name, price })) {
+  constructor(product) {
+    if (!validateProduct(product)) {
       throw new Error('Invalid data');
     }
+    const { code, name, price, productCode, shortName } = product;
 
     this.code = code;
     this.name = name;
+    this.shortName = shortName;
     this.price = price;
+    this.productCode = productCode;
   }
-
-  get code() { return this.code; };
-
-  get name() { return this.name; };
-
-  get price() { return this.price; };
-
-  set code(val) { this.code = val; };
-
-  set name(val) { this.name = val; };
-
-  set price(val) { this.price = val; };
-};
+}
 
 export default Product;

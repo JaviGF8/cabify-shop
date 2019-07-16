@@ -8,12 +8,21 @@
     "start": "SET ENVIRONMENT=development&& webpack-dev-server -d --progress",
     "mac": "ENVIRONMENT=development webpack-dev-server -d --progress",
     "build": "ENVIRONMENT=production webpack -p --progress && cp -a ./public/. ./build/",
-    "test": "react-scripts test",
+    "test": "jest --maxWorkers=100%",
     "eject": "react-scripts eject"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
+    }
+  },
+  "jest": {
+    "verbose": true,
+    "setupFiles": [
+      "./src/setupTests.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|scss)$": "identity-obj-proxy"
     }
   },
   "lint-staged": {
@@ -54,13 +63,17 @@
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.2",
+    "babel-jest": "24.8.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.26.2",
     "babel-polyfill": "^6.26.0",
     "babel-preset-airbnb": "^4.0.1",
     "babel-preset-minify": "^0.5.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.0.0",
+    "enzyme": "3.10.0",
+    "enzyme-adapter-react-16": "1.14.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-prettier": "^6.0.0",
@@ -72,6 +85,9 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^3.0.0",
+    "identity-obj-proxy": "3.0.0",
+    "jest": "24.8.0",
+    "jest-mock": "24.8.0",
     "lint-staged": "^9.2.0",
     "mini-css-extract-plugin": "^0.7.0",
     "node-sass": "^4.12.0",
