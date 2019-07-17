@@ -1,18 +1,64 @@
 import productsArray from './data/Products.json';
 import Product, { validateProduct } from './Product';
 
+const parseNumber = (num) => Number.parseFloat(num).toFixed(2);
+
+/**
+ *
+ * @param {*} products
+ * @param {*} appliedDiscounts
+ */
+const calculateTotal = (products, appliedDiscounts) => {
+  let total = 0;
+
+  if (products && products.length) {
+    products.forEach((prod) => {
+      if (prod.quantity) {
+        total = parseNumber(Number.parseFloat(total) + prod.quantity * prod.price);
+      }
+    });
+  }
+  if (appliedDiscounts && appliedDiscounts.length) {
+    appliedDiscounts.forEach((disc) => {
+      total = parseNumber(Number.parseFloat(total) - disc.discountAmount);
+    });
+  }
+
+  return total;
+};
+
 /**
  *
  * @param {*} products
  */
-const calculateTotal = (products) => {
-  let total = 0;
-  if (products && products.length) {
+const calculateDiscounts = (products, pricingRules) => {
+  const discounts = [];
+  let discountAmount = 0;
+
+  if (products && products.length && pricingRules && pricingRules.length) {
+    let productPRs = null;
     products.forEach((prod) => {
-      total = Number.parseFloat(Number.parseFloat(total) + prod.quantity * prod.price).toFixed(2);
+      // Get all the pricing rules of the product
+      productPRs = pricingRules.filter((pr) => pr.productCode === prod.code);
+
+      if (productPRs.length) {
+        let discount = null;
+        productPRs.forEach((ppr) => {
+          // calculate if has a discount
+          discount = ppr.calulateDiscount(prod.quantity, prod.price);
+
+          if (discount) {
+            discountAmount = parseNumber(
+              Number.parseFloat(discountAmount) + Number.parseFloat(discount.discountAmount),
+            );
+            discounts.push(discount);
+          }
+        });
+      }
     });
   }
-  return total;
+
+  return { discounts, discountAmount };
 };
 
 /**
@@ -22,7 +68,7 @@ const calculateTotal = (products) => {
 const formatProduct = (product) => ({
   ...product,
   quantity: 0,
-  total: Number.parseFloat(0).toFixed(2),
+  total: parseNumber(0),
 });
 
 /**
@@ -43,7 +89,7 @@ const onChange = (amount, product, products, total) => {
 
     totalItems = total - prodEditing.quantity + value;
     prodEditing.quantity = value;
-    prodEditing.total = Number.parseFloat(value * product.price).toFixed(2);
+    prodEditing.total = parseNumber(value * product.price);
 
     newProds[idx] = prodEditing;
   }
@@ -61,6 +107,7 @@ class Checkout {
     this.appliedDiscounts = [];
     this.totalPrice = 0;
     this.totalItems = 0;
+    this.totalWithoutDisc = 0;
   }
 
   /**
@@ -72,7 +119,10 @@ class Checkout {
 
       this.products = products;
       this.totalItems = totalItems;
-      this.totalPrice = calculateTotal(this.products);
+      const { discounts, discountAmount } = calculateDiscounts(this.products, this.pricingRules);
+      this.appliedDiscounts = discounts;
+      this.totalPrice = calculateTotal(this.products, this.appliedDiscounts);
+      this.totalWithoutDisc = parseNumber(Number.parseFloat(discountAmount) + Number.parseFloat(this.totalPrice));
       return this;
     }
     throw new Error('Invalid values');

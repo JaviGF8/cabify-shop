@@ -8,7 +8,10 @@ const Discounts = ({ currency, discounts }) => (
       {discounts.map((discount) => (
         <li key={discount.name}>
           <span>{discount.name}</span>
-          <span>-{discount.amount}{currency}</span>
+          <span>
+            -{discount.discountAmount}
+            {currency}
+          </span>
         </li>
       ))}
     </ul>

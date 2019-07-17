@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Cart from '../../components/shop/cart';
 import Summary from '../../components/shop/summary';
-import { validateProduct } from '../../models/Product';
 
 export default class ShoppingCartPage extends Component {
   constructor() {
@@ -26,17 +25,6 @@ export default class ShoppingCartPage extends Component {
   }
 
   onChangeQuantity = (amount, product) => {
-    // if (!Number.isNaN(amount) && validateProduct(product)) {
-    //   const { checkout } = this.state;
-    //   const co = { ...checkout };
-
-    //   const { products, totalItems } = onChange(amount, product, co.products, co.totalItems);
-    //   co.products = products;
-    //   co.totalItems = totalItems;
-    //   co.totalPrice = calculateTotal(co.products);
-
-    //   this.setState({ checkout: co });
-    // }
     const { checkout } = this.state;
 
     const co = checkout.onChangeQuantity(amount, product);
@@ -55,10 +43,10 @@ export default class ShoppingCartPage extends Component {
         />
         <Summary
           currency="€"
-          discounts={checkout && checkout.pricingRules}
-          // totalAmount={}
+          discounts={checkout && checkout.appliedDiscounts}
+          totalAmount={checkout && checkout.totalWithoutDisc}
           totalPrice={checkout && checkout.total && checkout.total()}
-          // totalItems={}
+          totalItems={checkout && checkout.totalItems}
         />
       </div>
     );
