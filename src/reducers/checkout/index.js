@@ -11,8 +11,8 @@ const checkouts = (state = initialState, action) => {
       return { ...state, checkout: action.checkout };
     case CHECKOUT_ACTIONS.loading:
       return { ...state, loading: true };
-    case CHECKOUT_ACTIONS.loading_end:
-      return { ...state, loading: false, initialLoad: false };
+    case CHECKOUT_ACTIONS.loadingEnd:
+      return { ...state, loading: false };
     default:
       return { ...state };
   }

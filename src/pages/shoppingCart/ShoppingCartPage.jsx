@@ -13,8 +13,10 @@ export default class ShoppingCartPage extends Component {
   }
 
   componentDidMount() {
-    const { initializeData } = this.props;
-    initializeData();
+    const { checkout } = this.props;
+    if (checkout) {
+      this.setState({ checkout });
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -34,16 +36,20 @@ export default class ShoppingCartPage extends Component {
 
   render() {
     const { checkout } = this.state;
+    const { loadingCheckout, loadingRules, setProduct } = this.props;
     return (
-      <div id="shopping-cart-container">
+      <div className="container">
         <Cart
           currency="€"
+          loading={loadingCheckout}
           onChange={this.onChangeQuantity}
           products={checkout && checkout.products && checkout.products}
+          setProduct={setProduct}
         />
         <Summary
           currency="€"
           discounts={checkout && checkout.appliedDiscounts}
+          loadingRules={loadingRules}
           totalAmount={checkout && checkout.totalWithoutDisc}
           totalPrice={checkout && checkout.total && checkout.total()}
           totalItems={checkout && checkout.totalItems}
@@ -55,11 +61,13 @@ export default class ShoppingCartPage extends Component {
 
 ShoppingCartPage.defaultProps = {
   checkout: null,
-  // products: [],
+  loadingCheckout: false,
+  loadingRules: false,
 };
 
 ShoppingCartPage.propTypes = {
   checkout: PropTypes.object,
-  initializeData: PropTypes.func.isRequired,
-  // products: PropTypes.array,
+  loadingCheckout: PropTypes.bool,
+  loadingRules: PropTypes.bool,
+  setProduct: PropTypes.func.isRequired,
 };

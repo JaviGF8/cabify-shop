@@ -11,8 +11,8 @@ const pricingRules = (state = initialState, action) => {
       return { ...state, pricingRules: action.pricingRules };
     case PRICING_RULE_ACTIONS.loading:
       return { ...state, loading: true };
-    case PRICING_RULE_ACTIONS.loading_end:
-      return { ...state, loading: false, initialLoad: false };
+    case PRICING_RULE_ACTIONS.loadingEnd:
+      return { ...state, loading: false };
     default:
       return { ...state };
   }

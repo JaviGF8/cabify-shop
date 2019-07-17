@@ -10,6 +10,10 @@ export const CHECKOUT_ACTIONS = {
 const loading = { type: CHECKOUT_ACTIONS.loading };
 const loadingEnd = { type: CHECKOUT_ACTIONS.loadingEnd };
 
+export const setCheckout = (checkout) => (dispatch) => {
+  dispatch({ type: CHECKOUT_ACTIONS.setCheckout, checkout });
+};
+
 export const initializeCheckout = () => (dispatch, getState) => {
   dispatch(loading);
   return new Promise((resolve) => {
@@ -24,8 +28,9 @@ export const initializeCheckout = () => (dispatch, getState) => {
       });
     }
 
-    dispatch({ type: CHECKOUT_ACTIONS.setCheckout, checkout: co });
+    dispatch(setCheckout(co));
     resolve(co);
-    dispatch(loadingEnd);
+    // Delay to display the loading component
+    setTimeout(() => dispatch(loadingEnd), 1000);
   });
 };

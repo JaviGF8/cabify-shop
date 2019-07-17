@@ -1,0 +1,50 @@
+@import '../../styles/constants.scss';
+
+#product-detail {
+  img {
+    flex: 1;
+  }
+
+  .summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .back-btn {
+      text-align: right;
+      font-size: 30px;
+      color: $default-gray;
+      margin: 0 0 32px 0;
+      padding: 0;
+    }
+
+    .product-detail {
+      display: flex;
+      flex-direction: column;
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 32px;
+      }
+
+      p.description {
+        padding: 32px 0;
+        border-bottom: 1px solid rgba($default-gray, 0.5);
+        border-top: 1px solid rgba($default-gray, 0.5);
+      }
+      p.code {
+        margin-top: 8px;
+        color: $default-gray;
+        font-size: 12px;
+      }
+
+      .btn {
+        margin-top: 32px;
+        text-align: center;
+      }
+    }
+  }
+}

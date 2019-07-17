@@ -7,9 +7,9 @@ import Total from './total';
 const Summary = ({ discounts, ...rest }) => (
   <div className="summary">
     <h1 className="main">Order Summary</h1>
-    {<Items {...rest} />}
+    <Items {...rest} />
     {discounts && 0 < discounts.length && <Discounts discounts={discounts} {...rest} />}
-    {<Total {...rest} />}
+    <Total {...rest} />
   </div>
 );
 
